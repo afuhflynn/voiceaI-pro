@@ -55,36 +55,36 @@ A voice-powered agent that automates real-world business processes such as sales
 
 1. Clone the repository
 
-   ```bash
+   \`\`\`bash
    git clone https://github.com/yourusername/business-voice-agent.git
    cd business-voice-agent
-   ```
+   \`\`\`
 2. Install dependencies
 
-   ```bash
+   \`\`\`bash
    yarn install
    # or npm install
-   ```
+   \`\`\`
 3. Create a `.env` file at the project root:
 
-   ```dotenv
+   \`\`\`dotenv
    ASSEMBLYAI_API_KEY=your_assemblyai_key
    LIVEKIT_API_KEY=your_livekit_key
    LIVEKIT_API_SECRET=your_livekit_secret
    DATABASE_URL=postgres://user:pass@localhost:5432/voice_agent
    REDIS_URL=redis://localhost:6379
-   ```
+   \`\`\`
 4. Run database migrations (using Prisma)
 
-   ```bash
+   \`\`\`bash
    npx prisma migrate deploy
-   ```
+   \`\`\`
 5. Start the server
 
-   ```bash
+   \`\`\`bash
    yarn dev
    # or npm run dev
-   ```
+   \`\`\`
 
 ---
 
@@ -99,7 +99,7 @@ A voice-powered agent that automates real-world business processes such as sales
 
 ## 🏗 Architecture
 
-```mermaid
+\`\`\`mermaid
 flowchart LR
   A[Client (Mic/WebRTC)] -->|Audio Stream| B[LiveKit Server]
   B -->|Media Stream| C[Node.js ASR Service]
@@ -108,7 +108,7 @@ flowchart LR
   E -->|Database| F[PostgreSQL/Redis]
   E -->|Actions| G[External APIs]
   E -->|Events| H[React Dashboard]
-```
+\`\`\`
 
 ---
 

@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "build": "db:generate && next build",
-    "dev": "next dev:turbopack",
-    "db:migrate:dev": "npx prisma migrate",
     "db:generate": "npx prisma generate",
-    "db:studio": "npx prisma studio",
-    "db:push": "npx prisma db push",
+    "db:migrate:dev": "npx prisma migrate",
     "db:pull": "npx prisma db pull",
+    "db:push": "npx prisma db push",
+    "db:studio": "npx prisma studio",
+    "dev": "next dev:turbopack",
     "lint": "next lint",
     "start": "next start"
   },

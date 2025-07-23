@@ -1,182 +1,139 @@
-# AI Voice Agent with RAG and Continuous Learning
+# Business Automation Voice Agent
 
-A specialized voice agent with advanced domain expertise, featuring Retrieval-Augmented Generation (RAG), continuous learning capabilities, and real-time voice processing.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+## 🚀 Submission Template
 
-### 🎤 Advanced Voice Processing
-- Real-time speech-to-text with domain-specific terminology recognition
-- Universal-Streaming technology for precise recognition
-- Voice visualization and audio level monitoring
-- Text-to-speech with natural voice synthesis
+* **Challenge**: Business Automation Voice Agent
+* **Built With**: AssemblyAI Universal-Streaming, LiveKit (optional), Node.js, Express, TypeScript
+* **Repository**:
 
-### 🧠 RAG-Powered Intelligence
-- Vector-based knowledge retrieval
-- Domain-specific knowledge base management
-- Semantic search capabilities
-- Context-aware response generation
+<embed src="https://github.com/afuhflynn/business-voice-agent" width="100%" height="400px" />
 
-### 📚 Continuous Learning
-- Conversation history analysis
-- Performance metrics tracking
-- Knowledge base auto-expansion
-- Pattern recognition improvement
+---
 
-### 🎯 Domain Specialization
-- Technical Support
-- Legal Advisory
-- Medical Consultation
-- Educational Assistance
-- Customer Service
+## 🎯 Project Overview
 
-## Architecture
+A voice-powered agent that automates real-world business processes such as sales outreach, customer support ticket routing, appointment scheduling, and lead qualification. Leveraging AssemblyAI's Universal-Streaming for accurate transcription, entity recognition, and command handling in professional contexts.
 
-### Frontend Components
-- **Voice Interface**: Real-time audio processing and visualization
-- **Knowledge Base**: RAG-enabled document management
-- **Conversation History**: Learning-focused interaction tracking
-- **Agent Metrics**: Performance and learning analytics
+### Key Features
 
-### Backend Services
-- **Voice Processing API**: Speech-to-text with domain awareness
-- **Response Generation**: RAG-enhanced AI responses
-- **Knowledge Management**: Vector search and storage
-- **Learning Pipeline**: Continuous improvement system
+* **Real-time Streaming ASR**: High-fidelity transcription of incoming voice streams.
+* **Entity & Intent Recognition**: Extracts proper nouns, business terminology, dates, and actions.
+* **Workflow Orchestration**: Multi-step conversation flows for tasks like scheduling or support escalation.
+* **B2B & B2C Scenarios**:
 
-### Database Schema
-- Knowledge base with vector embeddings
-- Conversation logs for learning
-- Performance metrics tracking
-- Voice processing analytics
+  * Sales call automation: follow-up, proposal dispatch
+  * Customer support: triage tickets based on keywords
+  * Appointment booking: interactive calendar integration
+  * Lead qualification: ask qualifying questions, score leads
 
-## Technology Stack
+### Technologies
 
-- **Framework**: Next.js 15 with App Router
-- **AI SDK**: Vercel AI SDK with streaming
-- **Voice Processing**: Web Speech API + AssemblyAI integration ready
-- **Vector Search**: Embeddings-based semantic search
-- **Database**: PostgreSQL with vector extensions
-- **Styling**: Tailwind CSS with shadcn/ui components
+* **Universal-Streaming**: AssemblyAI’s streaming API for transcription & NLP
+* **LiveKit**: (Optional) Real-time media orchestration
+* **Node.js & Express**: Backend and WebSocket server
+* **TypeScript**: Type safety and improved DX
+* **Redis**: Session state and workflow management
+* **PostgreSQL**: Structured storage of leads, tickets, appointments
+* **React**: Demo dashboard for live monitoring (optional)
 
-## Getting Started
+---
+
+## 📥 Getting Started
 
 ### Prerequisites
-- Node.js 18+
-- PostgreSQL with vector extension
-- OpenAI API key
-- (Optional) AssemblyAI API key for production voice processing
+
+* Node.js v18+
+* Yarn or npm
+* Redis
+* PostgreSQL
+* AssemblyAI API key
+* LiveKit credentials (if using LiveKit)
 
 ### Installation
 
-1. Clone the repository:
-\`\`\`bash
-git clone https://github.com/your-username/ai-voice-agent.git
-cd ai-voice-agent
-\`\`\`
+1. Clone the repository
 
-2. Install dependencies:
-\`\`\`bash
-npm install
-\`\`\`
+   ```bash
+   git clone https://github.com/yourusername/business-voice-agent.git
+   cd business-voice-agent
+   ```
+2. Install dependencies
 
-3. Set up environment variables:
-\`\`\`bash
-cp .env.example .env.local
-\`\`\`
+   ```bash
+   yarn install
+   # or npm install
+   ```
+3. Create a `.env` file at the project root:
 
-Add your API keys:
-\`\`\`env
-OPENAI_API_KEY=your_openai_key
-ASSEMBLYAI_API_KEY=your_assemblyai_key (optional)
-DATABASE_URL=your_postgresql_url
-\`\`\`
+   ```dotenv
+   ASSEMBLYAI_API_KEY=your_assemblyai_key
+   LIVEKIT_API_KEY=your_livekit_key
+   LIVEKIT_API_SECRET=your_livekit_secret
+   DATABASE_URL=postgres://user:pass@localhost:5432/voice_agent
+   REDIS_URL=redis://localhost:6379
+   ```
+4. Run database migrations (using Prisma)
 
-4. Initialize the database:
-\`\`\`bash
-npm run db:init
-\`\`\`
+   ```bash
+   npx prisma migrate deploy
+   ```
+5. Start the server
 
-5. Start the development server:
-\`\`\`bash
-npm run dev
-\`\`\`
+   ```bash
+   yarn dev
+   # or npm run dev
+   ```
 
-## Usage
+---
 
-### Voice Interaction
-1. Click "Start Listening" to begin voice input
-2. Speak your question or request
-3. The agent processes your speech with domain-specific recognition
-4. Receive AI-generated responses with RAG enhancement
-5. Listen to spoken responses or read text output
+## 🎥 Usage
 
-### Knowledge Base Management
-1. Navigate to the Knowledge Base tab
-2. Add domain-specific documents and information
-3. Use semantic search to find relevant content
-4. Monitor knowledge base growth and usage
+1. **Connect Client**: Use the provided React dashboard or any WebRTC client to join a LiveKit room.
+2. **Start Conversation**: Speak into microphone. The voice agent transcribes and processes commands.
+3. **Watch Workflow**: Follow logs in the dashboard to see intents, entities, and actions taken.
+4. **Customize Flows**: Edit `src/workflows/*.ts` to define new multi-step processes.
 
-### Continuous Learning
-1. Review conversation history for patterns
-2. Monitor agent performance metrics
-3. Observe learning progress indicators
-4. Analyze domain expertise development
+---
 
-## RAG Implementation
+## 🏗 Architecture
 
-The system uses a sophisticated RAG pipeline:
+```mermaid
+flowchart LR
+  A[Client (Mic/WebRTC)] -->|Audio Stream| B[LiveKit Server]
+  B -->|Media Stream| C[Node.js ASR Service]
+  C -->|Transcripts| D[AssemblyAI Universal-Streaming]
+  D -->|Entities & Commands| E[Workflow Engine]
+  E -->|Database| F[PostgreSQL/Redis]
+  E -->|Actions| G[External APIs]
+  E -->|Events| H[React Dashboard]
+```
 
-1. **Document Ingestion**: Knowledge base items are converted to embeddings
-2. **Query Processing**: User questions are embedded for similarity search
-3. **Retrieval**: Most relevant documents are retrieved based on vector similarity
-4. **Generation**: AI responses are enhanced with retrieved context
-5. **Learning**: Conversations are analyzed to improve future retrievals
+---
 
-## Voice Processing Pipeline
+## 🛠 Customization
 
-1. **Audio Capture**: Real-time microphone input
-2. **Speech Recognition**: Domain-aware transcription
-3. **Intent Analysis**: Understanding user requirements
-4. **Response Generation**: RAG-enhanced AI responses
-5. **Speech Synthesis**: Natural voice output
+* **Adding Workflows**: Define new flows in `src/workflows/` using the `WorkflowBuilder` API.
+* **Language Models**: Swap AssemblyAI endpoints or adjust parameters in `src/config/streaming.ts`.
+* **Front-end**: Tweak the React dashboard or build your own monitoring UI.
 
-## Deployment
+---
 
-### Vercel Deployment
-\`\`\`bash
-npm run build
-vercel deploy
-\`\`\`
+## 🤝 Contributing
 
-### Docker Deployment
-\`\`\`bash
-docker build -t ai-voice-agent .
-docker run -p 3000:3000 ai-voice-agent
-\`\`\`
+Contributions are welcome! Please open issues or pull requests against `main`.
 
-## API Endpoints
+---
 
-- `POST /api/voice/process` - Process audio input
-- `POST /api/voice/generate` - Generate AI responses
-- `GET /api/knowledge` - Retrieve knowledge base
-- `POST /api/knowledge` - Add knowledge items
-- `POST /api/knowledge/search` - Semantic search
+## 📄 License
 
-## Contributing
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Add tests and documentation
-5. Submit a pull request
+---
 
-## License
+## 📞 Contact
 
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- Vercel AI SDK for streaming AI responses
-- AssemblyAI for voice processing capabilities
-- OpenAI for language model integration
-- shadcn/ui for component library
+* Author: Your Name ([your.email@example.com](mailto:your.email@example.com))
+* GitHub: [yourusername](https://github.com/yourusername)
+* Twitter: [@yourhandle](https://twitter.com/yourhandle)

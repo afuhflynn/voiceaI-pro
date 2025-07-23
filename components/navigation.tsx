@@ -16,6 +16,7 @@ const links = [
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
@@ -43,14 +44,29 @@ export function Navigation() {
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/settings">
-            <Button variant="ghost" size="sm">
-              Settings
-            </Button>
-          </Link>
-          <Link href="/voice-agent">
-            <Button size="sm">Try Demo</Button>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/settings">
+                <Button variant="ghost" size="sm">
+                  Settings
+                </Button>
+              </Link>
+              <Link href="/voice-agent">
+                <Button size="sm">Dashboard</Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/auth/signin">
+                <Button variant="ghost" size="sm">
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/auth/signup">
+                <Button size="sm">Get Started</Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -79,14 +95,29 @@ export function Navigation() {
               </li>
             ))}
             <li className="pt-2 space-y-2">
-              <Link href="/settings" onClick={() => setOpen(false)}>
-                <Button variant="ghost" className="w-full">
-                  Settings
-                </Button>
-              </Link>
-              <Link href="/voice-agent" onClick={() => setOpen(false)}>
-                <Button className="w-full">Try Demo</Button>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/settings" onClick={() => setOpen(false)}>
+                    <Button variant="ghost" className="w-full">
+                      Settings
+                    </Button>
+                  </Link>
+                  <Link href="/voice-agent" onClick={() => setOpen(false)}>
+                    <Button className="w-full">Dashboard</Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/signin" onClick={() => setOpen(false)}>
+                    <Button variant="ghost" className="w-full">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link href="/auth/signup" onClick={() => setOpen(false)}>
+                    <Button className="w-full">Get Started</Button>
+                  </Link>
+                </>
+              )}
             </li>
           </ul>
         </div>

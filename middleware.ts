@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
-import { auth } from "./lib/auth";
-import { headers } from "next/headers";
 import { getServerSession } from "./lib/actions/get-server-session";
 
 export async function middleware(req: NextRequest) {
@@ -9,11 +6,14 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   if (isValidSession && (pathname === "/sign-up" || pathname === "/sign-in")) {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/voice-agent", req.url));
   }
 
   // Ensure that user is signed in before accessing home page
-  if (!isValidSession && pathname === "/") {
+  if (
+    !isValidSession &&
+    (pathname === "/voice-agent" || pathname === "settings" || pathname === "/")
+  ) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 

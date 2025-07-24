@@ -1,22 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/features", label: "Features" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-]
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Navigation() {
-  const [open, setOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
@@ -24,23 +15,14 @@ export function Navigation() {
         {/* Logo / Brand */}
         <Link
           href="/"
-          className="font-semibold text-lg bg-gradient-to-r from-chart-1 to-chart-2 bg-clip-text text-transparent"
+          className="font-semibold text-lg bg-gradient-to-r from-chart-1 to-chart-2/80 bg-clip-text text-transparent"
         >
           VoiceAI&nbsp;<span className="font-normal">Pro</span>
         </Link>
 
         {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-6">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          <li></li>
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
@@ -57,12 +39,12 @@ export function Navigation() {
             </>
           ) : (
             <>
-              <Link href="/auth/signin">
+              <Link href="/sign-in">
                 <Button variant="ghost" size="sm">
                   Sign In
                 </Button>
               </Link>
-              <Link href="/auth/signup">
+              <Link href="/sign-up">
                 <Button size="sm">Get Started</Button>
               </Link>
             </>
@@ -83,17 +65,7 @@ export function Navigation() {
       {open && (
         <div className="md:hidden border-t border-border bg-background/90 backdrop-blur-md">
           <ul className="flex flex-col py-4 px-4 gap-2">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block py-2 text-sm font-medium text-foreground/90 hover:text-foreground"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            <li></li>
             <li className="pt-2 space-y-2">
               {isAuthenticated ? (
                 <>
@@ -108,12 +80,12 @@ export function Navigation() {
                 </>
               ) : (
                 <>
-                  <Link href="/auth/signin" onClick={() => setOpen(false)}>
+                  <Link href="/sign-in" onClick={() => setOpen(false)}>
                     <Button variant="ghost" className="w-full">
                       Sign In
                     </Button>
                   </Link>
-                  <Link href="/auth/signup" onClick={() => setOpen(false)}>
+                  <Link href="/sign-up" onClick={() => setOpen(false)}>
                     <Button className="w-full">Get Started</Button>
                   </Link>
                 </>
@@ -123,5 +95,5 @@ export function Navigation() {
         </div>
       )}
     </header>
-  )
+  );
 }

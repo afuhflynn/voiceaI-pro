@@ -8,12 +8,8 @@ import { User } from "better-auth";
 
 export async function getServerSession(req: NextRequest): Promise<boolean> {
   const sessionCookie = getSessionCookie(req);
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
 
-  const isValidSession =
-    session?.session && session.user && sessionCookie ? true : false;
+  const isValidSession = sessionCookie ? true : false;
 
   return isValidSession;
 }

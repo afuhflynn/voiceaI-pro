@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     "AI, voice assistant, RAG, machine learning, voice recognition, chatbot",
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -30,11 +31,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.className} ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <div className="min-h-screen bg-background flex flex-col">
-            <Navigation />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <Toaster
+            className="bg-background w-auto"
+            theme="system"
+            richColors
+            closeButton
+          />
+          <main className="min-h-screen bg-background flex flex-col">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

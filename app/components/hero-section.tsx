@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
-import { Brain, Database, Zap, Sparkles, Mic } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import { Brain, Database, Zap, Sparkles, Mic } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -39,14 +39,15 @@ export function HeroSection() {
                 Intelligent Voice
               </span>
               <br />
-              <span className="bg-gradient-to-r from-chart-1 to-chart-2 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-chart-1 to-chart-2/80 bg-clip-text text-transparent">
                 Agent Platform
               </span>
             </h1>
 
             <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Advanced domain expertise with RAG-powered intelligence, continuous learning, and real-time voice
-              processing for professional applications.
+              Advanced domain expertise with RAG-powered intelligence,
+              continuous learning, and real-time voice processing for
+              professional applications.
             </p>
           </div>
 
@@ -89,7 +90,9 @@ export function HeroSection() {
               <div className="text-sm text-muted-foreground">Accuracy</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-foreground">&lt; 200ms</div>
+              <div className="text-3xl font-bold text-foreground">
+                &lt; 200ms
+              </div>
               <div className="text-sm text-muted-foreground">Response Time</div>
             </div>
             <div className="text-center">
@@ -104,5 +107,5 @@ export function HeroSection() {
         </div>
       </div>
     </div>
-  )
+  );
 }

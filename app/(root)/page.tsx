@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight, Play, Sparkles, Zap, Brain, Mic } from "lucide-react";
 import Link from "next/link";
-import { HeroSection } from "./components/hero-section";
-import { StatsSection } from "./components/stats-section";
+import { HeroSection } from "../components/hero-section";
+import { StatsSection } from "../components/stats-section";
 
 const voiceTechDetails = [
   {

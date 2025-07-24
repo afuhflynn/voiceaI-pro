@@ -1,52 +1,86 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Eye, EyeOff, Chrome } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+import { useState } from "react";
+import Link from "next/link";
+import { Eye, EyeOff, Chrome } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInPage() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    // Demo credentials check
-    if (formData.email === "demo@example.com" && formData.password === "password") {
-      console.log("Sign in successful!")
-      // Redirect to dashboard
-      window.location.href = "/voice-agent"
-    } else {
-      alert("Invalid credentials. Try demo@example.com / password")
+    if (!formData.email.trim() || !formData.password.trim()) {
+      toast.error("All fields are required to proceed.");
+      return;
     }
 
-    setIsLoading(false)
-  }
+    try {
+      const { error } = await signIn.email({
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/voice-agent",
+      });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error signin in. Try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true)
-    // Simulate Google OAuth
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log("Google sign in successful!")
-    window.location.href = "/voice-agent"
-    setIsLoading(false)
-  }
+    setIsLoading(true);
+    try {
+      const { error } = await signIn.social({
+        provider: "google",
+        callbackURL: "/voice-agent",
+      });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      toast.success("Google sign in initialized successful!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error signin up. Try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  const handleInputChange = (name: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
       <div className="w-full max-w-md">
@@ -55,7 +89,9 @@ export default function SignInPage() {
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-chart-1 to-chart-2 bg-clip-text text-transparent">
               Welcome Back
             </CardTitle>
-            <CardDescription>Sign in to your VoiceAI Pro account</CardDescription>
+            <CardDescription>
+              Sign in to your VoiceAI Pro account
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Google Sign In */}
@@ -74,7 +110,9 @@ export default function SignInPage() {
                 <Separator className="w-full" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with email</span>
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with email
+                </span>
               </div>
             </div>
 
@@ -85,9 +123,12 @@ export default function SignInPage() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="Enter your email"
                   value={formData.email}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    handleInputChange(e.target.name, e.target.value)
+                  }
                   required
                   className="h-11"
                 />
@@ -100,8 +141,11 @@ export default function SignInPage() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
+                    name="password"
                     value={formData.password}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+                    onChange={(e) =>
+                      handleInputChange(e.target.name, e.target.value)
+                    }
                     required
                     className="h-11 pr-10"
                   />
@@ -110,14 +154,21 @@ export default function SignInPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="text-sm">
-                  <Link href="/auth/forgot-password" className="text-chart-1 hover:text-chart-2 transition-colors">
+                  <Link
+                    href="/forgot-password"
+                    className="text-chart-1 hover:underline transition-colors"
+                  >
                     Forgot password?
                   </Link>
                 </div>
@@ -134,19 +185,16 @@ export default function SignInPage() {
 
             <div className="text-center text-sm text-muted-foreground">
               {"Don't have an account? "}
-              <Link href="/auth/signup" className="text-chart-1 hover:text-chart-2 transition-colors font-medium">
+              <Link
+                href="/sign-up"
+                className="text-chart-1 transition-colors font-medium hover:underline"
+              >
                 Sign up
               </Link>
-            </div>
-
-            {/* Demo Credentials */}
-            <div className="mt-6 p-3 bg-muted/30 rounded-lg border border-border/30">
-              <p className="text-xs text-muted-foreground text-center mb-2">Demo Credentials:</p>
-              <p className="text-xs font-mono text-center">demo@example.com / password</p>
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }
